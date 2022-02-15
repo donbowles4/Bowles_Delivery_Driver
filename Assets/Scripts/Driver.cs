@@ -5,14 +5,24 @@ using UnityEngine;
 public class Driver : MonoBehaviour
 {
     [SerializeField] float fltSteerSpeed = 1f;
-    [SerializeField] float fltMoveSpeed = 0.01f;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] float fltMoveSpeed = 12f;
+    [SerializeField] float fltSlowSpeed = 9f;
+    [SerializeField] float fltBoostSpeed = 18f;
+   
+   
+   void OnCollisionEnter2D(Collision2D other) 
+   {
+       fltMoveSpeed = fltSlowSpeed;
+   }
+   
+   
+   void OnTriggerEnter2D(Collider2D other)
     {
-        
-    }
-
-    // Update is called once per frame
+       if(other.tag == "Boost")
+       {
+        fltMoveSpeed = fltBoostSpeed;
+       }
+   }
     void Update()
     {
         float fltSteerAmount = Input.GetAxis("Horizontal") * fltSteerSpeed * Time.deltaTime;
